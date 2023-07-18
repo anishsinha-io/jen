@@ -1,0 +1,40 @@
+.navbar {
+    --navbar-black: rgba(27, 28, 27, 0.3);
+
+    color: var(--dark-gray);
+    height: 5rem;
+    display: grid;
+    align-items: center;
+    box-shadow: rgba(0, 0, 0, 0.19) 0 10px 20px, rgba(0, 0, 0, 0.23) 0 6px 6px;
+
+    background-color: var(--navbar-black);
+    backdrop-filter: blur(8px);
+
+    position: sticky;
+    z-index: 1000000;
+
+    width: 100%;
+}
+
+.navbar-header {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    justify-items: center;
+    align-items: center;
+    font-size: 1.25rem;
+    font-weight: 100;
+}
+
+.navbar-header-item {
+    cursor: pointer;
+}
+
+@media (prefers-color-scheme: dark) {
+    .navbar {
+        color: var(--soft-white);
+    }
+}
+
+.navbar-dark {
+
+}

@@ -5,9 +5,9 @@ import React, { useContext, useState } from 'react';
 import { PiPasswordLight, PiUserCircleLight } from "react-icons/pi";
 import { CiLogin } from 'react-icons/ci';
 
-import NamedInputWithIcon from "./util/NamedInputWithIcon";
-import NamedButtonWithIcon from "./util/NamedButtonWithIcon";
-import { Auth, AuthContext } from "../context/Auth";
+import NamedInputWithIcon from "../Util/NamedInputWithIcon/NamedInputWithIcon";
+import NamedButtonWithIcon from "../Util/NamedButtonWithIcon/NamedButtonWithIcon";
+import { Auth, AuthContext } from "../../context/Auth";
 
 const Login: React.FC = () => {
     const [email, setEmail] = useState<string>("");

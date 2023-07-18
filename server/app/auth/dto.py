@@ -16,3 +16,8 @@ class GetUserByEmail(Dto):
 @dataclass
 class GetUserAccess(Dto):
     user_id: str
+
+    # turn these on for more granularity if necessary
+    include_groups: bool = True
+    include_roles: bool = False
+    include_permissions: bool = False

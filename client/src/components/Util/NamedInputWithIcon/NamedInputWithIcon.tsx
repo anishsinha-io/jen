@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { IconType } from "react-icons";
-import { SettingsContext, UserSettings } from "../../context/Settings";
+import { SettingsContext, UserSettings } from "../../../context/Settings";
 
 export type NamedInputWithIconProps = {
     name: string;
