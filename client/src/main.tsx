@@ -1,7 +1,6 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App.tsx';
-import './index.css';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
 import { AuthContextProvider } from "./context/Auth";
 import { SettingsContextProvider } from "./context/Settings";
 import {
@@ -11,6 +10,8 @@ import {
 import HomePage from "./pages/Home/HomePage";
 import Navbar from "./components/Navbar/Navbar";
 import ErrorPage from "./pages/Error/ErrorPage";
+import AuthPage from "./pages/Auth/AuthPage";
+import { TabContextProvider } from "./context/Tab";
 
 const router = createBrowserRouter([
     {
@@ -18,14 +19,20 @@ const router = createBrowserRouter([
         element: <HomePage />,
         errorElement: <ErrorPage />
     },
+    {
+        path: "/login",
+        element: <AuthPage />
+    }
 ]);
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+ReactDOM.createRoot(document.getElementById("root")!).render(
     <React.StrictMode>
         <AuthContextProvider>
             <SettingsContextProvider>
-                <Navbar />
-                <RouterProvider router={router} />
+                <TabContextProvider>
+                    <Navbar />
+                    <RouterProvider router={router} />
+                </TabContextProvider>
             </SettingsContextProvider>
         </AuthContextProvider>
     </React.StrictMode>,
