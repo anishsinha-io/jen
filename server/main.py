@@ -3,9 +3,42 @@ from app import create_app
 from app.launch import LaunchMode
 from app.log.logger import get_logger
 
+from flask import jsonify
+from werkzeug.exceptions import HTTPException
+
 server = create_app()
 
 logger = get_logger("MAIN")
+
+
+@server.errorhandler(Exception)
+def handle_error(e):
+    code = 500
+    if isinstance(e, HTTPException):
+        code = e.code
+    logger.error(str(e))
+    return jsonify(error="internal server error"), code
+
+
+@server.route("/health/live")
+def liveness_probe():
+    return (
+        jsonify(
+            msg="if you're seeing this, the app is live! also, hi from anish and jenny (:"
+        ),
+        200,
+    )
+
+
+@server.route("/health/ready")
+def readiness_probe():
+    return (
+        jsonify(
+            msg="if you're seeing this, the app is ready!, also, hi from anish and jenny (:"
+        ),
+        200,
+    )
+
 
 if __name__ == "__main__":
     env = os.environ["LAUNCH_MODE"]

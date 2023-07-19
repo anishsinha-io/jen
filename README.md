@@ -108,7 +108,100 @@ Install the LTS version of Node: `nvm install --lts`
 
 Activate the LTS version: `nvm use --lts`
 
+_**PGAdmin**_
+
+Install with: `brew install --cask pgadmin4`
+
+Verify it exists by checking your applications folder. Double click to launch it.
+
 #### Configuring the technology installed
+
+_**PostgreSQL**_
+
+Open PGAdmin. Right click on servers->register->server. Enter whatever you want in the name field. Click the connection
+tab. Enter `localhost` for the host field. Enter `postgres` for the username and leave password blank. Click `save`. You
+should be able to inspect the database now. Right click on blog->databases->postgres and select `query tool`. Copy the
+contents of `migrations/1_initial.up.sql` and execute them against the database. This will create a schema called `blog`
+and around 20 tables. To undo everything, simply drop the schema: `drop schema blog cascade`.
+
+_**Redis**_
+
+Redis requires no extra configuration.
+
+_**NGINX**_
+
+`cd $(brew --prefix)/etc/nginx`
+
+`sudo vi nginx.conf`
+
+Delete the contents of the file. (shortcut: `esc ggVGx`). Add the line `user <your_username> staff` at the top of the
+file. Your username is the username you log into your computer with. If you don't know it, type `echo $HOME`. It's the
+last path segment.
+
+Copy and paste this beneath that line:
+
+```nginx configuration
+events {
+    worker_connections 1024;
+}
+
+http {
+
+    upstream backend {
+        server localhost:8888;
+    }
+
+    upstream frontend {
+        server localhost:5173;
+    }
+
+    server {
+        listen 80;
+        proxy_read_timeout 300;
+        proxy_connect_timeout 300;
+        proxy_send_timeout 300;
+        fastcgi_read_timeout 300;
+
+        location / {
+            proxy_pass http://frontend/;
+        }
+
+        location /api {
+            proxy_pass http://backend;
+        }
+    }
+}
+```
+
+Save and quit (shortcut: `esc :wq`)
+
+_**Python**_
+
+Ensure the conda environment you created earlier is active. `cd` into the server directory of this repository.
+Run `pip install -r requirements.txt`.
+
+Run `python server/setup_dev_env.py`
+
+Run `mv server/.env.example .env`
+
+Run `python main.py` in the root of the server directory to start the development server.
+
+_**Node.js**_
+
+Install yarn: `brew install yarn`
+Verify it installed: `yarn --version`
+
+`cd` into the client directory. Run `yarn`. This will install all packages necessary for the frontend.
+
+Start the client in development mode with `yarn dev`
+
+_**One last task!**_
+
+Run `sudo nginx -s reload` to reload the configuration we applied earlier.
+
+Navigate to http://localhost to view the frontend.
+
+To ensure the backend is healthy, run `curl http://localhost/api/health/live`.
 
 ### Viewing, Testing, and Developing
 
