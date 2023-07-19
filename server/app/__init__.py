@@ -16,11 +16,13 @@ server_session = Session()
 def create_app():
     app = Flask(__name__)
 
+    redis_url = "redis://" + os.environ["REDIS_HOST"] + ":" + os.environ["REDIS_PORT"]
+
     app.config["SECRET_KEY"] = os.environ["SECRET_KEY"]
     app.config["SESSION_TYPE"] = "redis"
     app.config["SESSION_PERMANENT"] = True
     app.config["SESSION_USE_SIGNER"] = True
-    app.config["SESSION_REDIS"] = redis.from_url("redis://localhost:6379")
+    app.config["SESSION_REDIS"] = redis.from_url(redis_url)
 
     from .auth.urls import module as auth
     from .users.urls import module as users

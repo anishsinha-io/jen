@@ -11,4 +11,4 @@ if __name__ == "__main__":
     env = os.environ["LAUNCH_MODE"]
     debug = env != LaunchMode.PROD
     logger.info("initialized app")
-    server.run(port=8888, debug=debug)
+    server.run(host="0.0.0.0", port=8888, debug=debug)

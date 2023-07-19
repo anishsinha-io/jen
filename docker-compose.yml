@@ -1,7 +1,7 @@
 version: "3.8"
 
 services:
-  db:
+  postgres:
     container_name: postgres
     image: postgres
     environment:
@@ -12,6 +12,8 @@ services:
     ports:
       - "5432:5432"
     hostname: postgres
+    volumes:
+      - ./migrations/1_initial.up.sql:/docker-entrypoint-initdb.d/init.sql
   pgadmin:
     container_name: pgadmin
     image: dpage/pgadmin4
@@ -21,6 +23,8 @@ services:
     ports:
       - "8889:80"
     hostname: pgadmin
+    depends_on:
+      - postgres
   redis:
     container_name: redis
     image: redis
@@ -34,3 +38,31 @@ services:
       dockerfile: Dockerfile
     ports:
       - "80:80"
+    depends_on:
+      - core
+      - client
+  core:
+    hostname: core
+    container_name: server
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./server:/app
+    depends_on:
+      - redis
+      - postgres
+  client:
+    container_name: client
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    hostname: client
+

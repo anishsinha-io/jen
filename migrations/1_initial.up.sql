@@ -20,7 +20,7 @@ $$ language plpgsql;
 -- users table
 create table if not exists users
 (
-    id         uuid        not null default blog.blog.uuid_generate_v4() primary key,
+    id         uuid        not null default blog.uuid_generate_v4() primary key,
     first_name text        not null,
     last_name  text        not null,
     email      text        not null,
@@ -39,7 +39,7 @@ execute function update_timestamp();
 -- user_credentials table
 create table if not exists user_credentials
 (
-    id          uuid        not null default blog.blog.uuid_generate_v4() primary key,
+    id          uuid        not null default blog.uuid_generate_v4() primary key,
     user_id     uuid        not null references users (id) on delete cascade,
     secret_data text        not null,
     algorithm   text        not null,
@@ -57,7 +57,7 @@ execute function update_timestamp();
 -- api_keys table
 create table if not exists api_keys
 (
-    id         uuid        not null default blog.blog.uuid_generate_v4() primary key,
+    id         uuid        not null default blog.uuid_generate_v4() primary key,
     user_id    uuid        not null references users (id) on delete cascade,
     api_key    text        not null,
     created_at timestamptz not null default current_timestamp,
@@ -73,7 +73,7 @@ execute function update_timestamp();
 -- sessions table
 create table if not exists sessions
 (
-    id            uuid        not null default blog.blog.uuid_generate_v4() primary key,
+    id            uuid        not null default blog.uuid_generate_v4() primary key,
     user_id       uuid        not null references users (id) on delete cascade,
     session_state text        not null,
     created_at    timestamptz not null default current_timestamp,
@@ -89,7 +89,7 @@ execute function update_timestamp();
 -- permissions table
 create table if not exists permissions
 (
-    id              uuid        not null default blog.blog.uuid_generate_v4() primary key,
+    id              uuid        not null default blog.uuid_generate_v4() primary key,
     permission_name text        not null,
     scopes          text[]      not null,
     created_at      timestamptz not null default current_timestamp,
@@ -106,7 +106,7 @@ execute function update_timestamp();
 -- roles table
 create table if not exists roles
 (
-    id         uuid        not null default blog.blog.uuid_generate_v4() primary key,
+    id         uuid        not null default blog.uuid_generate_v4() primary key,
     role_name  text        not null,
     created_at timestamptz not null default current_timestamp,
     updated_at timestamptz not null default current_timestamp,
@@ -122,7 +122,7 @@ execute function update_timestamp();
 -- role_permission_mapping table
 create table if not exists role_permission_mappings
 (
-    id            uuid        not null default blog.blog.uuid_generate_v4() primary key,
+    id            uuid        not null default blog.uuid_generate_v4() primary key,
     role_id       uuid        not null references roles (id) on delete cascade,
     permission_id uuid        not null references permissions (id) on delete cascade,
     created_at    timestamptz not null default current_timestamp,
@@ -138,7 +138,7 @@ execute function update_timestamp();
 -- groups table
 create table if not exists groups
 (
-    id         uuid        not null default blog.blog.uuid_generate_v4() primary key,
+    id         uuid        not null default blog.uuid_generate_v4() primary key,
     group_name text        not null,
     created_at timestamptz not null default current_timestamp,
     updated_at timestamptz not null default current_timestamp,
@@ -154,7 +154,7 @@ execute function update_timestamp();
 -- group_role_mappings table
 create table if not exists group_role_mappings
 (
-    id         uuid        not null default blog.blog.uuid_generate_v4() primary key,
+    id         uuid        not null default blog.uuid_generate_v4() primary key,
     role_id    uuid        not null references roles (id) on delete cascade,
     group_id   uuid        not null references groups (id) on delete cascade,
     created_at timestamptz not null default current_timestamp,
@@ -170,7 +170,7 @@ execute function update_timestamp();
 -- group_permission_mappings table
 create table if not exists group_permission_mappings
 (
-    id            uuid        not null default blog.blog.uuid_generate_v4() primary key,
+    id            uuid        not null default blog.uuid_generate_v4() primary key,
     permission_id uuid        not null references permissions (id) on delete cascade,
     group_id      uuid        not null references groups (id) on delete cascade,
     created_at    timestamptz not null default current_timestamp,
@@ -254,7 +254,7 @@ create table if not exists posts
     user_id    uuid        not null references users (id) on delete cascade,
     title      text        not null,
     content    text        not null,
-    read_time  text        not null,
+    read_time  int         not null,
     created_at timestamptz not null default current_timestamp,
     updated_at timestamptz not null default current_timestamp
 );
