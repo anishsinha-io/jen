@@ -7,7 +7,7 @@ a blog for jenny and me
 This project recommends Docker to be installed for the best experience. If you are unwilling or unable to install
 docker, click [here](#building-without-docker).
 
-Please navigate
+Otherwise, please navigate
 to [the official website](https://docs.docker.com/get-docker/) and install Docker for your operating system. Once docker
 is installed, please run
 
@@ -43,6 +43,72 @@ if the above script ran correctly and generated the required file. Once this is 
 ### Building Without Docker
 
 Building this application without docker is _significantly_ harder, but here's how you can do it.
+
+You will need the following software installed locally:
+
+- PostgreSQL
+- Redis
+- Nginx
+- Python
+- Node.js
+
+#### MacOS
+
+_**PostgreSQL**_
+
+To install PostgreSQL on Mac, ensure you have Homebrew installed. If you don't, please run the following command:
+
+`/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
+
+Install with: `brew install postgresql`
+
+Verify it exists: `brew services list | grep postgresql`
+
+Start it: `brew services start postgresql`
+
+Verify it works: `psql postgresql://postgres@localhost/postgres`
+
+By default, no password should be necessary.
+
+_**Redis**_
+
+Install with: `brew install redis`
+
+Verify it exists: `brew services list | grep redis`
+
+Start it: `brew services start redis`
+
+Verify it works: `redis-cli`
+
+_**NGINX**_
+
+Install with: `brew install nginx`
+
+Verify it exists: `brew services list | grep nginx`
+
+Start it: `brew services start nginx`
+
+Verify it works: `curl localhost` (you should receive a 404 status)
+
+_**Python**_
+
+Ensure you have Anaconda installed and the `conda` CLI configured: `conda --version`
+
+Create an environment: `conda create -n <env_name> python=3.10.12 ipython`
+
+Activate the environment: `conda activate <env_name>`
+
+_**Node.js**_
+
+Install the Node Version Manager: `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash`
+
+Ensure nvm exists: `nvm --version`
+
+Install the LTS version of Node: `nvm install --lts`
+
+Activate the LTS version: `nvm use --lts`
+
+#### Configuring the technology installed
 
 ### Viewing, Testing, and Developing
 
