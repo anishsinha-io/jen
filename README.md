@@ -29,14 +29,15 @@ to clone over HTTPS instead.
 
 `cd` into the directory you just cloned.
 
-Run the setup script which will generate a `.env.example` file which contains a randomly generated secret key for Flask,
+Run the setup script which will generate a `.env.example` file which contains a randomly
+generated secret key for Flask,
 and an RSA key pair for signing JSON Web Tokens issued by the backend server.
 
-Run the command
+If the above script ran correctly and generated the required file, run the command
 
 `mv ./server/.env.example .env`
 
-if the above script ran correctly and generated the required file. Once this is done, run
+Once this is done, run
 
 `docker compose up`
 
