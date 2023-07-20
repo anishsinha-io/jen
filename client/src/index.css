@@ -17,6 +17,10 @@
     --barbie-blue: #0aaef3;
     --magenta-haze: #c0c0c0;
     --bus-yellow: #f2d202;
+
+    --error-red: #ED1D24;
+    --error-red-transluscent: rgba(237, 29, 36, 0.4);
+
 }
 
 

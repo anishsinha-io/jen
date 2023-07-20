@@ -11,9 +11,11 @@ import { Settings, SettingsContext, Theme } from "@/context/Settings";
 
 import { PiPasswordLight } from "react-icons/pi";
 import { BsCheck2All } from "react-icons/bs";
+import { VscError } from "react-icons/vsc";
 
-import { ClipLoader, FadeLoader, MoonLoader, RingLoader } from "react-spinners";
+import { RingLoader } from "react-spinners";
 import { http } from "@services/http";
+import { useNavigate } from "react-router-dom";
 
 const loginButtonCSSOverrides: CSSProperties = {
     display: "block",
@@ -22,24 +24,24 @@ const loginButtonCSSOverrides: CSSProperties = {
 };
 
 const Login: React.FC = () => {
-
     const { setTab } = useContext<Tab>(TabContext);
     const { theme } = useContext<Settings>(SettingsContext);
 
-    const iconColorLight = "#0c0c0c";
     const iconColorDark = "#f8f9fa";
     const iconColorBarbie = "#0aaef3";
 
-    let iconColor = iconColorLight;
+    let iconColor = "#0c0c0c";
     if (theme === Theme.BARBIE) iconColor = iconColorBarbie;
-    else iconColor = iconColorDark;
+    if (theme === Theme.DARK) iconColor = iconColorDark;
 
+    const navigate = useNavigate();
+
+    const { authenticated, setToken } = useContext<Auth>(AuthContext);
 
     useEffect(() => {
+        if (authenticated) navigate("/");
         setTab(() => "Login");
-    }, []);
-
-    const { authenticated, setToken, loading, token } = useContext<Auth>(AuthContext);
+    }, [authenticated]);
 
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
@@ -47,23 +49,44 @@ const Login: React.FC = () => {
     const [showSpinner, setShowSpinner] = useState<boolean>(false);
     const [showCheck, setShowCheck] = useState<boolean>(false);
 
+    const [showLoginError, setShowLoginError] = useState<boolean>(false);
+    const [loginError, setLoginError] = useState<string>("");
+
     const handleSignIn = async (e) => {
         e.preventDefault();
-        setShowSpinner(() => true);
-        const res = await http.post("/auth/login", { email, password });
-        console.log("HERE");
-        console.log(res);
-        if (res.status != 200) {
-            console.log("error logging in");
-        } else {
-            setToken(() => res.data.token);
-            setShowCheck(() => true);
+        if (!email || !password) {
+            setLoginError(() => "Please enter an email and a password before submitting");
+            setShowLoginError(() => true);
+            return;
         }
-        setShowSpinner(() => false);
+        setShowSpinner(() => true);
+        try {
+            const res = await http.post("/auth/login", { email, password });
+            if (res.status != 200) {
+                setShowSpinner(() => false);
+                setLoginError(() => "Invalid email or password");
+                setShowLoginError(() => true);
+                setEmail(() => "");
+                setPassword(() => "");
+            } else {
+                setToken(() => res.data.token);
+                setShowCheck(() => true);
+                navigate("/");
+                setShowSpinner(() => false);
+            }
+        } catch {
+            setShowSpinner(() => false);
+            setLoginError(() => "Invalid email or password");
+            setShowLoginError(() => true);
+            setEmail(() => "");
+            setPassword(() => "");
+        }
     };
 
     return <div className={styles.login + " " + styles["login-" + theme]}>
         <h1 className={styles["login-heading"]}>WELCOME BACK!</h1>
+        {showLoginError &&
+            <div className={styles["login-error"]}><p>{loginError}</p></div>}
         <form className={styles["login-form"] + " " + styles["login-form-" + theme]}>
             <label className={styles["input-label"]}>
                 <BsPerson color={iconColor}
@@ -71,8 +94,14 @@ const Login: React.FC = () => {
                           size={"2rem"} />
                 <p>EMAIL</p>
                 <input type={"text"} placeholder={"jennysinha@gmail.com"}
-                       className={styles["input"] + " " + styles["input-" + theme]} value={email}
-                       onChange={(e) => setEmail(e.target.value)} />
+                       className={styles["input"] + " " + styles["input-" + theme] + " " + (showLoginError && styles.error)}
+                       value={email}
+                    // onChange={(e) => setEmail(e.target.value)}
+                       onChange={(e) => {
+                           setShowLoginError(() => false);
+                           setEmail(e.target.value);
+                       }}
+                />
             </label>
             <label className={styles["input-label"]}>
                 <PiPasswordLight color={iconColor}
@@ -80,13 +109,18 @@ const Login: React.FC = () => {
                                  size={"2rem"} />
                 <p>PASSWORD</p>
                 <input type={"password"} placeholder={"password"}
-                       className={styles["input"] + " " + styles["input-" + theme]} value={password}
-                       onChange={(e) => setPassword(e.target.value)} />
+                       className={styles["input"] + " " + styles["input-" + theme] + " " + (showLoginError && styles.error)}
+                       value={password}
+                       onChange={(e) => {
+                           setShowLoginError(() => false);
+                           setPassword(e.target.value);
+                       }
+                       } />
             </label>
             <button type={"submit"} className={styles["login-button"] + " " + styles["login-button-" + theme]}
                     onClick={(e) => handleSignIn(e)}>
-                {showSpinner || showCheck || <p>Login</p>}
-                {showCheck || showSpinner && <RingLoader
+                {showLoginError || showSpinner || showCheck || <p>Login</p>}
+                {showLoginError || showCheck || showSpinner && <RingLoader
                     color={iconColor}
                     // loading={showSpinner}
                     // cssOverride={loginButtonCSSOverrides}
@@ -95,7 +129,8 @@ const Login: React.FC = () => {
                     // data-testid="loader"
                     // className={styles["login-loading-spinner"]}
                 />}
-                {showSpinner || showCheck && <BsCheck2All size={"1.5rem"} color={iconColor} />}
+                {showLoginError || showSpinner || showCheck && <BsCheck2All size={"1.5rem"} color={iconColor} />}
+                {showLoginError && <VscError color={iconColor} size={"1.75rem"} />}
             </button>
         </form>
     </div>;

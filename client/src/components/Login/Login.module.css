@@ -84,13 +84,18 @@
     place-items: center;
 }
 
-/*.login-button-barbie:hover {*/
-/*    border: 2px solid var(--barbie-pink);*/
-/*    background-color: var(--barbie-pink);*/
-/*    transition: all 0.1s ease-in;*/
-/*    color: var(--soft-white);*/
-/*}*/
+.login-error {
+    width: 80%;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    background-color: var(--error-red-transluscent);
+    border: 2px solid var(--error-red);
+    color: var(--soft-white);
+    text-align: center;
+}
 
-.login-loading-spinner {
-    /*max-height: 1rem;*/
+.error {
+    border: 2px solid red;
+    background-color: var(--error-red-transluscent);
 }
