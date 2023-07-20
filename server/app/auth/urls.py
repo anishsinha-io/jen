@@ -56,6 +56,7 @@ def handle_login():
     res = jsonify(access_token=access_token, refresh_token=refresh_token)
 
     res.set_cookie("session_state", session_state, httponly=True)
+    # res.set_cookie("session_state", session_state, httponly=True, domain="client")
 
     return res, 200
 

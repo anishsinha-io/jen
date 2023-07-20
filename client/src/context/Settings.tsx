@@ -1,20 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-export interface UserSettings {
-    darkMode: boolean;
-    setDarkMode: any;
+export enum Theme {
+    DARK = "dark",
+    LIGHT = "light",
+    BARBIE = "barbie"
 }
 
-export const SettingsContext = React.createContext<UserSettings>({
-    darkMode: true,
-    setDarkMode: () => {
-    }
+export interface Settings {
+    theme: Theme;
+    setTheme: (_: any) => void;
+}
+
+export const SettingsContext = React.createContext<Settings>({
+    theme: Theme.BARBIE,
+    setTheme: () => {
+    },
 });
 
 export const SettingsContextProvider = (props) => {
-    const [darkMode, setDarkMode] = useState<boolean>(true);
+    const [theme, setTheme] = useState<Theme>(Theme.BARBIE);
 
-    return <SettingsContext.Provider value={{ darkMode, setDarkMode }}>
+    return <SettingsContext.Provider value={{ theme, setTheme }}>
         {props.children}
     </SettingsContext.Provider>;
 };

@@ -2,6 +2,20 @@
   "compilerOptions": {
     "target": "ES2020",
     "useDefineForClassFields": true,
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ],
+      "@assets/*": [
+        "./src/assets/*"
+      ],
+      "@components/*": [
+        "./src/components/*"
+      ],
+      "@services/*": [
+        "./src/services/*"
+      ]
+    },
     "lib": [
       "ES2020",
       "DOM",

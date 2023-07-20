@@ -1,7 +1,10 @@
 .auth {
-    display: grid;
-    justify-items: center;
-    align-items: center;
     height: 100%;
-    margin: 15% auto 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: center;
+}
+
+.auth-barbie {
+    background-color: var(--barbie-pink);
 }

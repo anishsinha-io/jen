@@ -12,6 +12,7 @@ import Navbar from "./components/Navbar/Navbar";
 import ErrorPage from "./pages/Error/ErrorPage";
 import AuthPage from "./pages/Auth/AuthPage";
 import { TabContextProvider } from "./context/Tab";
+import EditorPage from "./pages/Editor/EditorPage";
 
 const router = createBrowserRouter([
     {
@@ -22,7 +23,12 @@ const router = createBrowserRouter([
     {
         path: "/login",
         element: <AuthPage />
+    },
+    {
+        path: "/edit",
+        element: <EditorPage />
     }
+
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

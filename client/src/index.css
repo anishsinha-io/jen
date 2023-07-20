@@ -5,17 +5,18 @@
     font-family: Satoshi, Poppins, Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
     font-synthesis: none;
 
-    --soft-white: rgba(248, 249, 250, 1);
-    --dark-gray: rgba(12, 12, 12, 1);
-    --blue-bolt: rgba(53, 91, 245, 1);
-    --dark-blue: rgba(12, 18, 50, 1);
-    --indigo-dye: rgba(0, 78, 122, 1);
-    --gold-metallic: rgba(223, 188, 83, 1);
-    --turquoise: rgba(57, 208, 193, 1);
-    --mauve: rgba(197, 173, 255, 1);
-    --barbie-pink: rgba(248, 139, 230, 1);
-    --azul: rgba(29, 93, 236, 1);
-    --beehive: rgba(255, 221, 101, 1);
+    --white: #ffffff;
+    --black: #000000;
+
+    --soft-white: #f8f9fa;
+    --dark-gray: #0c0c0c;
+
+    --barbie-pink: #e56db1;
+    --lavender-pink: #ffadd2;
+    --barbie-purple: #cd68c8;
+    --barbie-blue: #0aaef3;
+    --magenta-haze: #c0c0c0;
+    --bus-yellow: #f2d202;
 }
 
 
@@ -25,9 +26,17 @@
 
 }
 
-body {
-    background-color: var(--mauve);
-    color: var(--soft-white);
+html, body {
+    margin: 0;
+    height: 100%;
+}
+
+#root {
+    height: 100%;
+}
+
+button {
+    font-family: inherit;
 }
 
 h1 {
@@ -41,8 +50,20 @@ a {
 
 input {
     font: inherit;
+    outline: none;
+    border: none;
 }
 
 input:focus {
     outline: none;
+}
+
+input::placeholder {
+    color: inherit;
+}
+
+button {
+    color: inherit;
+    border: none;
+    background-color: inherit;
 }

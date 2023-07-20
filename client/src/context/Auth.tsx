@@ -1,22 +1,23 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
+
+import { http } from "@services/http";
 
 export interface User {
-    id: string
-    firstName: string
-    lastName: string
-    username: string,
-    email: string,
-    created_at: string,
-    updated_at: string
+    id: string;
+    firstName: string;
+    lastName: string;
+    username: string;
+    email: string;
+    created_at: string;
+    updated_at: string;
 }
 
 export interface Auth {
-    token: string,
-    setToken: React.Dispatch<React.SetStateAction<string>>
-    authenticated: boolean,
-    loading: boolean
-    user: User | null
+    token: string;
+    setToken: React.Dispatch<React.SetStateAction<string>>;
+    authenticated: boolean;
+    loading: boolean;
+    user: User | null;
 }
 
 export const AuthContext = React.createContext<Auth>({
@@ -24,7 +25,7 @@ export const AuthContext = React.createContext<Auth>({
     setToken: () => "",
     authenticated: false,
     loading: true,
-    user: null
+    user: null,
 });
 
 export const AuthContextProvider = (props) => {
@@ -41,13 +42,8 @@ export const AuthContextProvider = (props) => {
     };
 
     const refreshAuthStatus = async () => {
-        const url = "http://localhost:8888/api";
-        const http = axios.create({
-            withCredentials: true,
-            baseURL: url
-        });
         try {
-            const res = await http.post('/auth/token').catch();
+            const res = await http.post("/auth/token").catch();
             if (res.status !== 200) {
                 clearAuthData();
                 return;

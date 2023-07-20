@@ -1,71 +1,96 @@
 .login {
+    width: 100%;
+    max-width: 25rem;
     margin: 0 auto;
     display: grid;
     grid-template-columns: 1fr;
-    gap: 1rem;
-    /*border: 1px solid var(--soft-white);*/
-    width: 25rem;
-    padding: 2rem;
-    background-color: var(--barbie-pink);
-    color: var(--barbie-pink);
-    border-radius: 0.75rem;
-}
-
-.login-input-label {
-    font-weight: 500;
-    color: var(--azul);
-}
-
-.login-input {
-    width: 100%;
-    font-size: 1rem;
-    height: 2.5rem;
-    border-radius: 0.5rem;
-    border: 1px solid var(--soft-white);
-    background-color: var(--soft-white);
-    /*background-color: var(--gold-metallic);*/
-    /*color: var(--indigo-dye);*/
-    font-weight: 300;
-    padding-left: 0.5rem;
-    margin-top: 0.25rem;
-    color: var(--azul);
-}
-
-.login-input::placeholder {
-    color: var(--azul);
+    justify-items: center;
+    border-radius: 1rem;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
 }
 
 .login-heading {
-    justify-self: center;
     font-weight: 400;
-    color: var(--azul);
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.login-barbie {
+    background-color: var(--barbie-blue);
+    color: var(--soft-white);
+    font-weight: 100;
+}
+
+.input-label {
+    position: relative;
+    width: 80%;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+}
+
+.input-icon {
+    position: absolute;
+    top: 52%;
+    left: 0.5rem;
+    z-index: 10000000;
+}
+
+.input {
+    padding-left: 3rem;
+    font-size: 1.15rem;
+    color: inherit;
+    width: 100%;
+    height: 2.75rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+}
+
+.input-barbie {
+    color: var(--dark-gray);
+
+}
+
+.input::placeholder {
+    color: var(--magenta-haze);
+}
+
+.login-form {
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 100%;
+    justify-items: center;
+    gap: 1rem;
 }
 
 .login-button {
-    font-family: inherit;
-    width: 30%;
-    justify-self: center;
-    height: 2.5rem;
+    padding: 0.5rem 2rem;
+    font-size: 1.25rem;
     cursor: pointer;
+    height: 3rem;
+    width: 8rem;
+}
+
+.login-button-barbie {
+    margin-top: 1rem;
+    border: 2px solid var(--soft-white);
+    color: var(--barbie-blue);
+    background-color: var(--soft-white);
     border-radius: 0.5rem;
-    background-color: inherit;
-    border: 1px solid var(--soft-white);
-    color: var(--soft-white);
+    text-align: center;
+    display: grid;
+    grid-template-columns: 1fr;
+    place-items: center;
 }
 
-.active {
-    background-color: var(--beehive);
-    border: 0;
-    color: var(--azul);
-}
-
-.login-spinner {
-    height: 100%;
-}
-
-/*.active:hover {*/
-/*    background-color: var(--indigo-dye);*/
+/*.login-button-barbie:hover {*/
+/*    border: 2px solid var(--barbie-pink);*/
+/*    background-color: var(--barbie-pink);*/
+/*    transition: all 0.1s ease-in;*/
 /*    color: var(--soft-white);*/
-/*    transition: all 0.3s ease-in;*/
-/*    border: 1px solid var(--soft-white);*/
 /*}*/
+
+.login-loading-spinner {
+    /*max-height: 1rem;*/
+}

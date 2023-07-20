@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 
 import { useMediaQuery } from "usehooks-ts";
 
-import { UserSettings, SettingsContext } from "../../context/Settings";
+import { Settings, SettingsContext } from "../../context/Settings";
 
 import { Link, redirect, useNavigate } from "react-router-dom";
 
@@ -13,7 +13,7 @@ const Navbar: React.FC = () => {
 
     const { tab, setTab } = useContext<Tab>(TabContext);
 
-    const { darkMode } = useContext<UserSettings>(SettingsContext);
+    const { darkMode } = useContext<Settings>(SettingsContext);
     const darkModeClass = darkMode ? "dark" : "";
 
     const mobile = useMediaQuery("(max-width: 600px)");
