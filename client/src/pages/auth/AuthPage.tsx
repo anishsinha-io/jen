@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import Login from "../../components/Login/Login";
+import Login from "../../components/login/Login";
 
 import styles from "./AuthPage.module.css";
 import { Tab, TabContext } from "@/context/Tab";

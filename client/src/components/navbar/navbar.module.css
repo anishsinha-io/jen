@@ -4,7 +4,7 @@
     height: 5rem;
     display: grid;
     align-items: center;
-    box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+    box-shadow: rgba(17, 12, 46, 0.15) 0 48px 100px 0;
 
     /*background-color: var(--navbar-black);*/
     backdrop-filter: blur(8px);

@@ -5,7 +5,7 @@ from flask import request, session, jsonify
 
 from .tokens import verify_token
 
-logger = get_logger("Auth")
+logger = get_logger("auth")
 
 
 def rbac_guard(

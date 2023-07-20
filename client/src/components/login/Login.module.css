@@ -8,6 +8,7 @@
     border-radius: 1rem;
     padding-top: 1rem;
     padding-bottom: 2rem;
+    box-shadow: rgba(17, 12, 46, 0.15) 0 48px 100px 0;
 }
 
 .login-heading {

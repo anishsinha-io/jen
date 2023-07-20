@@ -11,7 +11,7 @@ const HomePage: React.FC = () => {
     const { setTab } = useContext<Tab>(TabContext);
 
     useEffect(() => {
-        setTab(() => "Home");
+        setTab(() => "home");
     }, []);
 
     return <section className={styles.home}>

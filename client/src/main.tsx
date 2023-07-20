@@ -4,30 +4,31 @@ import "./index.css";
 import { AuthContextProvider } from "./context/Auth";
 import { SettingsContextProvider } from "./context/Settings";
 import {
+    BrowserRouter,
     createBrowserRouter,
     RouterProvider,
 } from "react-router-dom";
-import HomePage from "./pages/Home/HomePage";
-import Navbar from "./components/Navbar/Navbar";
-import ErrorPage from "./pages/Error/ErrorPage";
-import AuthPage from "./pages/Auth/AuthPage";
+import HomePage from "./pages/home/HomePage";
+import Navbar from "./components/navbar/Navbar";
+import ErrorPage from "./pages/error/ErrorPage";
+import AuthPage from "./pages/auth/AuthPage";
 import { TabContextProvider } from "./context/Tab";
-import EditorPage from "./pages/Editor/EditorPage";
+import EditorPage from "./pages/editor/EditorPage";
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <HomePage />,
-        errorElement: <ErrorPage />
+        errorElement: <ErrorPage />,
     },
     {
         path: "/login",
-        element: <AuthPage />
+        element: <AuthPage />,
     },
     {
         path: "/edit",
-        element: <EditorPage />
-    }
+        element: <EditorPage />,
+    },
 
 ]);
 

@@ -18,6 +18,8 @@ export interface Auth {
     authenticated: boolean;
     loading: boolean;
     user: User | null;
+    logout: any,
+    login: any
 }
 
 export const AuthContext = React.createContext<Auth>({
@@ -26,6 +28,8 @@ export const AuthContext = React.createContext<Auth>({
     authenticated: false,
     loading: true,
     user: null,
+    logout: null,
+    login: null,
 });
 
 export const AuthContextProvider = (props) => {
@@ -39,6 +43,18 @@ export const AuthContextProvider = (props) => {
         setToken(() => "");
         setLoadingAuthenticationState(() => false);
         setUser(() => null);
+    };
+
+
+    const login = async (email: string, password: string) => {
+        const res = await http.post("/auth/login", { email, password });
+        if (res.status === 200) {
+            const data: { access_token: string, refresh_token: string } = res.data;
+            setToken(() => data.access_token);
+            setAuthenticated(() => true);
+        }
+
+        return res;
     };
 
     const refreshAuthStatus = async () => {
@@ -60,19 +76,29 @@ export const AuthContextProvider = (props) => {
         }
     };
 
+    const logout = async () => {
+        await http.post("/auth/logout", {}, {
+            headers: {
+                Authorization: "Bearer " + token,
+            },
+        });
+        console.log("HERE");
+        clearAuthData();
+    };
+
     useEffect(() => {
         const interval = setInterval(() => {
             refreshAuthStatus().catch(console.log);
         }, 100000);
         return () => clearInterval(interval);
-    }, [authenticated]);
+    }, []);
 
     useEffect(() => {
         refreshAuthStatus().catch(console.log);
-    }, []);
+    }, [authenticated]);
 
     return <AuthContext.Provider
-        value={{ token, setToken, authenticated, loading: loadingAuthenticationState, user }}>
+        value={{ token, setToken, authenticated, loading: loadingAuthenticationState, user, logout, login }}>
         {props.children}
     </AuthContext.Provider>;
 };

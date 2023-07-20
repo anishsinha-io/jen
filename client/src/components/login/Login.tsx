@@ -3,7 +3,7 @@ import axios from "axios";
 
 import { BsPerson } from "react-icons/bs";
 
-import styles from "@components/Login/Login.module.css";
+import styles from "@components/login/Login.module.css";
 
 import { Auth, AuthContext } from "@/context/Auth";
 import { Tab, TabContext } from "@/context/Tab";
@@ -36,7 +36,7 @@ const Login: React.FC = () => {
 
     const navigate = useNavigate();
 
-    const { authenticated, setToken } = useContext<Auth>(AuthContext);
+    const { authenticated, setToken, login } = useContext<Auth>(AuthContext);
 
     useEffect(() => {
         if (authenticated) navigate("/");
@@ -61,8 +61,8 @@ const Login: React.FC = () => {
         }
         setShowSpinner(() => true);
         try {
-            const res = await http.post("/auth/login", { email, password });
-            if (res.status != 200) {
+            const res = await login(email, password);
+            if (res.status !== 200) {
                 setShowSpinner(() => false);
                 setLoginError(() => "Invalid email or password");
                 setShowLoginError(() => true);
@@ -84,7 +84,7 @@ const Login: React.FC = () => {
     };
 
     return <div className={styles.login + " " + styles["login-" + theme]}>
-        <h1 className={styles["login-heading"]}>WELCOME BACK!</h1>
+        <h1 className={styles["login-heading"]}>Welcome Back.</h1>
         {showLoginError &&
             <div className={styles["login-error"]}><p>{loginError}</p></div>}
         <form className={styles["login-form"] + " " + styles["login-form-" + theme]}>
@@ -96,7 +96,6 @@ const Login: React.FC = () => {
                 <input type={"text"} placeholder={"jennysinha@gmail.com"}
                        className={styles["input"] + " " + styles["input-" + theme] + " " + (showLoginError && styles.error)}
                        value={email}
-                    // onChange={(e) => setEmail(e.target.value)}
                        onChange={(e) => {
                            setShowLoginError(() => false);
                            setEmail(e.target.value);
