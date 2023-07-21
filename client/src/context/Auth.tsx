@@ -82,7 +82,6 @@ export const AuthContextProvider = (props) => {
                 Authorization: "Bearer " + token,
             },
         });
-        console.log("HERE");
         clearAuthData();
     };
 

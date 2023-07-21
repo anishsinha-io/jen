@@ -1,11 +1,10 @@
 import React from "react";
 
-import Editor from "@components/editor/Editor";
-
-import Spinner from "@assets/loading.svg";
+import styles from "./EditorPage.module.css";
 
 const EditorPage = () => {
-    return <Editor />;
+    return <section className={styles.editor}>
+    </section>;
 };
 
 export default EditorPage;
