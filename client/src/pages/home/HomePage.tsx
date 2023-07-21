@@ -42,13 +42,20 @@ const DefaultElement = props => {
 };
 
 const Leaf = (props: RenderLeafProps) => {
+
+    const underline = props.leaf["underline"] ? "underline" : "";
+    const strikeThrough = props.leaf["strikethrough"] ? "line-through" : "";
+
+    const textDecorationClassName = underline + " " + strikeThrough;
+    console.log(textDecorationClassName);
+
     return (
         <span
             {...props.attributes}
             style={{
                 fontWeight: props.leaf["bold"] ? "bold" : "normal",
                 fontStyle: props.leaf["italic"] ? "italic" : "normal",
-                textDecoration: props.leaf["underline"] ? "underline" : "normal",
+                textDecoration: textDecorationClassName,
             }}
         >
       {props.children}
@@ -109,6 +116,11 @@ const HomePage: React.FC = () => {
                     case "u": {
                         e.preventDefault();
                         toggleMark(editor, "underline");
+                        break;
+                    }
+                    case "s": {
+                        e.preventDefault();
+                        toggleMark(editor, "strikethrough");
                         break;
                     }
                 }
