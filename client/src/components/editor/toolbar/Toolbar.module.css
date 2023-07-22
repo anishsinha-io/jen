@@ -1,0 +1,19 @@
+.toolbar {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(1rem, 1fr));
+    border: 1px solid blue;
+}
+
+.toolbar-btn {
+    border: 1px solid black;
+    display: grid;
+    grid-template-columns: 1fr;
+    place-items: center;
+    max-width: 2rem;
+}
+
+.active {
+    font-weight: bold;
+    background-color: var(--dark-gray);
+    color: var(--soft-white);
+}

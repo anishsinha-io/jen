@@ -14,6 +14,7 @@ import ErrorPage from "./pages/error/ErrorPage";
 import AuthPage from "./pages/auth/AuthPage";
 import { TabContextProvider } from "./context/Tab";
 import EditorPage from "./pages/editor/EditorPage";
+import EditorToolbarStatusContextProvider from "@components/editor/context/Editor";
 
 const router = createBrowserRouter([
     {
@@ -37,8 +38,10 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <AuthContextProvider>
             <SettingsContextProvider>
                 <TabContextProvider>
-                    <Navbar />
-                    <RouterProvider router={router} />
+                    <EditorToolbarStatusContextProvider>
+                        <Navbar />
+                        <RouterProvider router={router} />
+                    </EditorToolbarStatusContextProvider>
                 </TabContextProvider>
             </SettingsContextProvider>
         </AuthContextProvider>

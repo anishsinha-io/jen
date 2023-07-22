@@ -1,19 +1,33 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 
-export interface ToolbarState {
-    bold: boolean;
-    italic: boolean;
-    underline: boolean;
-    strikethrough: boolean;
-    h1: boolean;
-    h2: boolean;
-    h3: boolean;
-}
+import styles from "./Toolbar.module.css";
+import { Editor } from "slate";
 
-const ToolbarContext = React.createContext(null);
+import { BsTypeBold, BsTypeItalic, BsTypeStrikethrough, BsTypeUnderline } from "react-icons/bs";
+import { EditorToolbarStatus, EditorToolbarStatusContext } from "@components/editor/context/Editor";
 
 const Toolbar = () => {
-    return <div></div>;
+    const { editor, setBold, bold, toggleMark } = useContext<EditorToolbarStatus>(EditorToolbarStatusContext);
+
+    const handleClick = (e) => {
+        toggleMark("bold");
+    };
+
+    return <div className={styles.toolbar}>
+        <button data-name={"bold"} onClick={(e) => handleClick(e)}
+                className={styles["toolbar-btn"] + (bold ? styles.active : "")}>
+            <BsTypeBold size={20} />
+        </button>
+        {/*<button data-name={"italic"} onClick={handleClick} className={styles["toolbar-btn"]}>*/}
+        {/*    <BsTypeItalic size={20} />*/}
+        {/*</button>*/}
+        {/*<button data-name={"underline"} onClick={handleClick} className={styles["toolbar-btn"]}>*/}
+        {/*    <BsTypeUnderline size={20} />*/}
+        {/*</button>*/}
+        {/*<button data-name={"strikethrough"} onClick={handleClick} className={styles["toolbar-btn"]}>*/}
+        {/*    <BsTypeStrikethrough size={20} />*/}
+        {/*</button>*/}
+    </div>;
 };
 
 export default Toolbar;
