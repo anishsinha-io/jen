@@ -5,7 +5,6 @@ export const Leaf: React.FC<RenderLeafProps> = ({ leaf, attributes, children }) 
 
     const underline = leaf["underline"] ? "underline" : "";
     const strikeThrough = leaf["strikethrough"] ? "line-through" : "";
-
     const textDecorationClassName = underline + " " + strikeThrough;
 
     return (
