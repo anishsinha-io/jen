@@ -32,7 +32,7 @@ services:
       - "6379:6379"
     hostname: redis
   nginx:
-    container_name: nginx
+    container_name: jen-nginx
     build:
       context: ./nginx
       dockerfile: Dockerfile
@@ -43,7 +43,7 @@ services:
       - client
   core:
     hostname: core
-    container_name: server
+    container_name: jen-server
     build:
       context: ./server
       dockerfile: Dockerfile
@@ -55,7 +55,7 @@ services:
       - redis
       - postgres
   client:
-    container_name: client
+    container_name: jen-client
     build:
       context: ./client
       dockerfile: Dockerfile
