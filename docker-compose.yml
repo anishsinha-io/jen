@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   postgres:
-    container_name: postgres
+    container_name: jen-postgres
     image: postgres
     environment:
       POSTGRES_USER: postgres
@@ -15,7 +15,7 @@ services:
     volumes:
       - ./migrations/1_initial.up.sql:/docker-entrypoint-initdb.d/init.sql
   pgadmin:
-    container_name: pgadmin
+    container_name: jen-pgadmin
     image: dpage/pgadmin4
     environment:
       PGADMIN_DEFAULT_EMAIL: anishsinha0128@gmail.com
@@ -26,7 +26,7 @@ services:
     depends_on:
       - postgres
   redis:
-    container_name: redis
+    container_name: jen-redis
     image: redis
     ports:
       - "6379:6379"
