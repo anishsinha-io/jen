@@ -27,7 +27,7 @@ declare module "slate" {
 const initialValue: Descendant[] = [
     {
         type: "paragraph",
-        children: [{ text: "A line of text in a paragraph." }],
+        children: [{ text: "I love you, my Sinha" }],
     } as Descendant,
 ];
 
