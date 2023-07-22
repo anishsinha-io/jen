@@ -37,17 +37,19 @@ const CodeElement = (props) => {
     </pre>;
 };
 
+const H1Element = (props) => {
+    return <h1 {...props.attributes}>{props.children}</h1>;
+};
+
 const DefaultElement = props => {
     return <p {...props.attributes}>{props.children}</p>;
 };
 
 const Leaf = (props: RenderLeafProps) => {
-
     const underline = props.leaf["underline"] ? "underline" : "";
     const strikeThrough = props.leaf["strikethrough"] ? "line-through" : "";
 
     const textDecorationClassName = underline + " " + strikeThrough;
-    console.log(textDecorationClassName);
 
     return (
         <span
@@ -78,12 +80,14 @@ const HomePage: React.FC = () => {
         switch (props.element.type) {
             case "code":
                 return <CodeElement {...props} />;
+            case "h1":
+                return <H1Element {...props} />;
             default:
                 return <DefaultElement {...props} />;
         }
     }, []);
 
-    const renderLeaf = useCallback(props => {
+    const renderLeaf = useCallback((props: RenderLeafProps) => {
         return <Leaf {...props} />;
     }, []);
 
@@ -92,7 +96,7 @@ const HomePage: React.FC = () => {
     return <section className={styles.home}>
         <Slate editor={editor} initialValue={initialValue}>
             <Editable onKeyDown={(e) => {
-                if (!e.ctrlKey) return;
+                if (!e.metaKey) return;
 
                 switch (e.key) {
                     case "`": {
@@ -121,6 +125,14 @@ const HomePage: React.FC = () => {
                     case "s": {
                         e.preventDefault();
                         toggleMark(editor, "strikethrough");
+                        break;
+                    }
+                    case "h": {
+                        e.preventDefault();
+                        const [match] = Editor.nodes(editor, {
+                            match: (n: any) => n.type === "h1",
+                        });
+                        Transforms.setNodes<any>(editor, { type: match ? "paragraph" : "h1" }, { match: n => Element.isElement(n) && Editor.isBlock(editor, n) });
                         break;
                     }
                 }
