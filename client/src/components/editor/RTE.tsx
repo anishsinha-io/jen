@@ -1,16 +1,12 @@
-import React, { useCallback, useContext, useState } from "react";
-import { Slate, Editable } from "slate-react";
+import React, { useCallback, useContext } from "react";
+import { Editable, Slate } from "slate-react";
 import { Descendant } from "slate";
 import { renderElement, renderLeaf } from "@components/editor/render";
-import { handleKeyDown } from "@components/editor/keybindings/meta";
 import Toolbar from "@components/editor/toolbar/Toolbar";
 
 import styles from "./RTE.module.css";
 
-import {
-    EditorToolbarStatusContext,
-    EditorToolbarStatus,
-} from "@components/editor/context/Editor";
+import { EditorToolbarStatus, EditorToolbarStatusContext } from "@components/editor/context/Editor";
 
 
 const initialValue: Descendant[] = [
@@ -25,21 +21,21 @@ const RTE = () => {
     const renderLeafCb = useCallback(renderLeaf, []);
 
     const {
-        editor,
+        editor, handleKeyDown,
     } = useContext<EditorToolbarStatus>(EditorToolbarStatusContext);
 
     return <div className={styles.rte}>
         <Toolbar />
         <Slate editor={editor!} initialValue={initialValue}>
             <Editable placeholder={"Write something amazing..."}
-                      onKeyDown={(e) => handleKeyDown(editor!, e)}
+                      onKeyDown={(e) => handleKeyDown(e)}
                       renderElement={renderElementCb}
                       renderLeaf={renderLeafCb}
                       className={styles.editor}
                       renderPlaceholder={({ children, attributes }) => (
-                          <div {...attributes}>
-                              <p className={styles.placeholder}>{children}</p>
-                          </div>
+                          <span {...attributes} className={styles.placeholder}>
+                              {children}
+                          </span>
                       )}
             />
         </Slate>
