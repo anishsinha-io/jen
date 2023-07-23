@@ -1,14 +1,13 @@
 import React, { useCallback, useContext, useState } from "react";
-import { Slate, Editable, ReactEditor } from "slate-react";
-import { withReact } from "slate-react";
-import { BaseEditor, createEditor, Descendant } from "slate";
+import { Slate, Editable } from "slate-react";
+import { Descendant } from "slate";
 import { renderElement, renderLeaf } from "@components/editor/render";
 import { handleKeyDown } from "@components/editor/keybindings/meta";
-import { HistoryEditor } from "slate-history";
 import Toolbar from "@components/editor/toolbar/Toolbar";
 
 import styles from "./RTE.module.css";
-import EditorToolbarStatusContextProvider, {
+
+import {
     EditorToolbarStatusContext,
     EditorToolbarStatus,
 } from "@components/editor/context/Editor";
@@ -22,8 +21,6 @@ const initialValue: Descendant[] = [
 ];
 
 const RTE = () => {
-    // const [editor] = useState(() => withReact(createEditor()));
-
     const renderElementCb = useCallback(renderElement, []);
     const renderLeafCb = useCallback(renderLeaf, []);
 

@@ -19,7 +19,7 @@ export interface EditorToolbarStatus {
     setUnderline?: React.Dispatch<React.SetStateAction<boolean>>,
     strikethrough: boolean,
     setStrikethrough?: React.Dispatch<React.SetStateAction<boolean>>,
-    toggleMark: (mark: string) => void
+    toggleMarkDisplay: (mark: string) => void
 }
 
 const initialState: EditorToolbarStatus = {
@@ -27,7 +27,7 @@ const initialState: EditorToolbarStatus = {
     italic: false,
     underline: false,
     strikethrough: false,
-    toggleMark: (mark: string) => null,
+    toggleMarkDisplay: (mark: string) => null,
 };
 
 export const EditorToolbarStatusContext = React.createContext<EditorToolbarStatus>(initialState);
@@ -42,20 +42,12 @@ const EditorToolbarStatusContextProvider = (props) => {
 
     useEffect(() => console.clear(), []);
 
-    const toggleMark = (mark: string) => {
-        const marks: any = Editor.marks(editor);
-        if (!marks) return;
-        switch (mark) {
-            case "bold":
-                setBold((state) => !state);
-                if (marks[mark]) {
-                    Editor.removeMark(editor, mark);
-                } else {
-                    Editor.addMark(editor, mark, true);
-                }
-        }
+    const toggleMarkDisplay = (mark: string) => {
+        if (mark === "bold") setBold((state) => !state);
+        if (mark === "italic") setBold((state) => !state);
+        if (mark === "underline") setBold((state) => !state);
+        if (mark === "strikethrough") setBold((state) => !state);
     };
-
 
     return <EditorToolbarStatusContext.Provider value={{
         editor,
@@ -67,7 +59,7 @@ const EditorToolbarStatusContextProvider = (props) => {
         setUnderline,
         strikethrough,
         setStrikethrough,
-        toggleMark,
+        toggleMarkDisplay,
     }}>{props.children}</EditorToolbarStatusContext.Provider>;
 };
 

@@ -5,12 +5,16 @@ import { Editor } from "slate";
 
 import { BsTypeBold, BsTypeItalic, BsTypeStrikethrough, BsTypeUnderline } from "react-icons/bs";
 import { EditorToolbarStatus, EditorToolbarStatusContext } from "@components/editor/context/Editor";
+import { toggleMark } from "@components/editor/util/marks";
 
 const Toolbar = () => {
-    const { editor, setBold, bold, toggleMark } = useContext<EditorToolbarStatus>(EditorToolbarStatusContext);
+    const { editor, setBold, bold, toggleMarkDisplay } = useContext<EditorToolbarStatus>(EditorToolbarStatusContext);
 
-    const handleClick = (e) => {
-        toggleMark("bold");
+    const handleClick = (e: any) => {
+        if (!Editor.marks(editor!)) return;
+        const mark = e.currentTarget.getAttribute("data-name");
+        toggleMark(editor!, mark);
+        toggleMarkDisplay(mark);
     };
 
     return <div className={styles.toolbar}>
@@ -18,15 +22,15 @@ const Toolbar = () => {
                 className={styles["toolbar-btn"] + (bold ? styles.active : "")}>
             <BsTypeBold size={20} />
         </button>
-        {/*<button data-name={"italic"} onClick={handleClick} className={styles["toolbar-btn"]}>*/}
-        {/*    <BsTypeItalic size={20} />*/}
-        {/*</button>*/}
-        {/*<button data-name={"underline"} onClick={handleClick} className={styles["toolbar-btn"]}>*/}
-        {/*    <BsTypeUnderline size={20} />*/}
-        {/*</button>*/}
-        {/*<button data-name={"strikethrough"} onClick={handleClick} className={styles["toolbar-btn"]}>*/}
-        {/*    <BsTypeStrikethrough size={20} />*/}
-        {/*</button>*/}
+        <button data-name={"italic"} onClick={handleClick} className={styles["toolbar-btn"]}>
+            <BsTypeItalic size={20} />
+        </button>
+        <button data-name={"underline"} onClick={handleClick} className={styles["toolbar-btn"]}>
+            <BsTypeUnderline size={20} />
+        </button>
+        <button data-name={"strikethrough"} onClick={handleClick} className={styles["toolbar-btn"]}>
+            <BsTypeStrikethrough size={20} />
+        </button>
     </div>;
 };
 

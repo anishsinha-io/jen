@@ -1,7 +1,8 @@
 import { KeyboardEvent } from "react";
 import { Editor } from "slate";
-import { toggleMark } from "@components/editor/util/marks";
 import isHotkey from "is-hotkey";
+
+import { toggleMark } from "@components/editor/util/marks";
 
 export const handleKeyDown = (editor: Editor, e: KeyboardEvent<HTMLDivElement>) => {
     if (isHotkey("mod+b", e)) toggleMark(editor, "bold");
