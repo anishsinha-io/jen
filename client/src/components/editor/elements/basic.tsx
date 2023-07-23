@@ -9,4 +9,4 @@ export const CodeElement: React.FC<RenderElementProps> = ({ attributes, children
     return <pre {...attributes}>
         <code>{children}</code>
     </pre>;
-}
+};
