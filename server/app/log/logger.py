@@ -11,7 +11,8 @@ def get_logger(name: str) -> Logger:
     """Function to initialize a logger for a specified module
 
     :param name: Logger name
-    :return: New logger or reference to existing logger with the same name if it's already been created
+    :return: New logger or reference to existing logger with the same name if it's
+             already been created
     """
 
     logger = getLogger(name=name)

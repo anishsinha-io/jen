@@ -4,6 +4,7 @@ from app.launch import LaunchMode
 from app.log.logger import get_logger
 
 from flask import jsonify
+from psycopg.rows import DictRow
 from werkzeug.exceptions import HTTPException
 
 server = create_app()
@@ -16,6 +17,7 @@ def handle_error(e):
     code = 500
     if isinstance(e, HTTPException):
         code = e.code
+
     logger.error(str(e))
     return jsonify(error="internal server error"), code
 

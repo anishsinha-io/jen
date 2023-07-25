@@ -6,6 +6,8 @@ from app.dto import Dto
 
 @dataclass
 class CreateUser(Dto):
+    """Data transfer object to create a user"""
+
     first_name: str
     last_name: str
     email: str

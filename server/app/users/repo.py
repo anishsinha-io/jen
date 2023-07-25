@@ -6,6 +6,8 @@ from app.conn import with_connection
 
 @with_connection
 def create_user(conn: Connection[DictRow], dto) -> None:
+    """Function to insert a user record into the database"""
+
     query = """--sql
             insert into blog.users (first_name, last_name, email, username) 
             values (%(first_name)s, %(last_name)s, %(email)s, %(username)s)

@@ -23,7 +23,9 @@ def get_user(conn: Connection[DictRow], dto: GetUser) -> UserWithCredentialData 
 
 
 @with_connection
-def get_user_by_email(conn: Connection[DictRow], dto: GetUserByEmail) -> UserWithCredentialData | None:
+def get_user_by_email(
+    conn: Connection[DictRow], dto: GetUserByEmail
+) -> UserWithCredentialData | None:
     query = """
             select blog.users.id, first_name, last_name, email, username, blog.users.created_at,
             blog.users.updated_at, user_credentials.algorithm, user_credentials.secret_data from 

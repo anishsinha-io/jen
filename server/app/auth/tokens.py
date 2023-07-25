@@ -58,7 +58,17 @@ def create_login_response(user_id: str) -> LoginResponse:
         access=access.dict(),
     )
 
-    return LoginResponse(access_token=access_token, refresh_token=refresh_token,
-                         user=User(id=user.id, email=user.email, username=user.username, created_at=user.created_at,
-                                   updated_at=user.updated_at, first_name=user.first_name, last_name=user.last_name,
-                                   access=access))
+    return LoginResponse(
+        access_token=access_token,
+        refresh_token=refresh_token,
+        user=User(
+            id=user.id,
+            email=user.email,
+            username=user.username,
+            created_at=user.created_at,
+            updated_at=user.updated_at,
+            first_name=user.first_name,
+            last_name=user.last_name,
+            access=access,
+        ),
+    )

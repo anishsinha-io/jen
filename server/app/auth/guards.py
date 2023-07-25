@@ -9,10 +9,10 @@ logger = get_logger("auth")
 
 
 def rbac_guard(
-        groups=None,
-        roles=None,
-        permissions=None,
-        # scopes: list[str] = [],
+    groups=None,
+    roles=None,
+    permissions=None,
+    # scopes: list[str] = [],
 ):
     if groups is None:
         groups = ["default"]
@@ -61,9 +61,7 @@ def rbac_guard(
                 return jsonify(msg="not enough permissions"), 403
             if not all(role in user_roles for role in roles):
                 return jsonify(msg="not enough permissions"), 403
-            if not all(
-                    permission in user_permissions for permission in permissions
-            ):
+            if not all(permission in user_permissions for permission in permissions):
                 return jsonify(msg="not enough permissions"), 403
 
             result = fn(*args, **kwargs)

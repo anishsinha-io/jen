@@ -2,6 +2,7 @@ from psycopg import Connection
 from psycopg.rows import DictRow
 
 from app.conn import with_connection
+from app.posts.dto import DeletePostsDto
 
 from .entity import Post
 
@@ -14,9 +15,15 @@ def create_post(conn: Connection[DictRow], dto) -> None:
             """
 
     with conn.cursor() as cursor:
-        post = cursor.execute(query,
-                              {"user_id": dto.user_id, "title": dto.title, "content": dto.content,
-                               "read_time": dto.read_time}).fetchone()
+        post = cursor.execute(
+            query,
+            {
+                "user_id": dto.user_id,
+                "title": dto.title,
+                "content": dto.content,
+                "read_time": dto.read_time,
+            },
+        ).fetchone()
 
         query = """
                 insert into blog.post_tags (post_id, tag_id) values (%(post_id)s, %(tag_id)s)
@@ -58,5 +65,8 @@ def edit_post(conn: Connection[DictRow], dto) -> None:
 
 
 @with_connection
-def delete_post(conn: Connection[DictRow], dto) -> None:
-    pass
+def delete_post(conn: Connection[DictRow], dto: DeletePostsDto) -> None:
+    query = """delete from posts where id=%(id)s"""
+
+    with conn.cursor() as cursor:
+        cursor.execute(query, {"id": dto.post_id})

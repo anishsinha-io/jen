@@ -11,6 +11,8 @@ module = Blueprint("users", __name__, url_prefix="/users")
 
 @module.route("/", methods=["POST"])
 def handle_users():
+    """Function that handles fetching users"""
+
     body = request.json
     dto = CreateUser(**body)
     if body.get("secret_data"):
