@@ -12,6 +12,10 @@ from .repo import get_user_access, get_user
 
 
 def verify_token(token: str) -> Token | None:
+    """Verify a JSON Web Token's authenticity and return the deserialized claims.
+
+    :param token: the candidate encoded token
+    """
     try:
         return Token(
             **jwt.decode(token, PUBLIC_KEY, algorithms=["RS256"], audience=AUD)
@@ -21,6 +25,13 @@ def verify_token(token: str) -> Token | None:
 
 
 def create_login_response(user_id: str) -> LoginResponse:
+    """Generate a login response with an access_token, refresh_token,
+    and user object
+
+    :param user_id: the user's id
+    :return: a LoginResponse object containing the information above
+    """
+
     dto = GetUserAccess(user_id=user_id)
 
     access = get_user_access(dto=dto)

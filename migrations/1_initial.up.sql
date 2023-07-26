@@ -25,6 +25,7 @@ create table if not exists users
     last_name  text        not null,
     email      text        not null,
     username   text        not null,
+    image_uri  text        not null,
     created_at timestamptz not null default current_timestamp,
     updated_at timestamptz not null default current_timestamp,
     unique (email)
@@ -43,7 +44,6 @@ create table if not exists user_credentials
     user_id     uuid        not null references users (id) on delete cascade,
     secret_data text        not null,
     algorithm   text        not null,
-    expires_at  timestamptz,
     created_at  timestamptz not null default current_timestamp,
     updated_at  timestamptz not null default current_timestamp
 );
@@ -254,6 +254,7 @@ create table if not exists posts
     user_id    uuid        not null references users (id) on delete cascade,
     title      text        not null,
     content    text        not null,
+    image_uri  text        not null,
     read_time  int         not null,
     created_at timestamptz not null default current_timestamp,
     updated_at timestamptz not null default current_timestamp
@@ -359,7 +360,7 @@ values ('default_read',
 --
 -- default role
 insert into roles (role_name)
-values ('default_user');
+values ('default_user'), ('admin');
 --
 -- add default permissions to default role
 with default_permissions as (select id
@@ -373,9 +374,15 @@ select distinct default_permissions.id,
                  where roles.role_name like 'default%')
 from default_permissions;
 --
--- default group 
+-- add permissions to admin role
+with admin_permissions as (select id from permissions where permissions.permission_name like 'admin%')
+insert into role_permission_mappings(permission_id, role_id)
+select distinct admin_permissions.id, (select id from roles where roles.role_name like 'admin%')
+from admin_permissions;
+--
+-- default group and admin group 
 insert into groups (group_name)
-values ('default');
+values ('default'), ('admin');
 --
 -- add default role to default group
 with default_roles as (select id
@@ -388,3 +395,10 @@ select distinct default_roles.id,
                  from groups
                  where groups.group_name like 'default%')
 from default_roles;
+--
+-- add admin role to admin group 
+with admin_roles as (select id from roles where roles.role_name like 'admin%')
+insert into group_role_mappings (role_id, group_id)
+select distinct admin_roles.id, (select id from groups where groups.group_name like 'admin%') 
+from admin_roles;
+

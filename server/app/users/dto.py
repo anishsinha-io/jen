@@ -12,6 +12,7 @@ class CreateUser(Dto):
     last_name: str
     email: str
     username: str
-    secret_data: str = None
-    algorithm: HashAlgorithm = HashAlgorithm.ARGON2
+    image_uri: str
+    secret_data: str | None = None
+    algorithm: HashAlgorithm = HashAlgorithm("argon2")
     add_to_default_group: bool = True

@@ -65,4 +65,3 @@ services:
       - ./client:/app
       - /app/node_modules
     hostname: client
-

@@ -1,6 +1,7 @@
 class PrefixMiddleware:
     """Create global prefix middleware"""
 
+    # NOTE test note here
     def __init__(self, app, prefix=""):
         self.app = app
         self.prefix = prefix
@@ -13,5 +14,6 @@ class PrefixMiddleware:
         else:
             start_response("200", [("Content-Type", "application/json")])
             return [
-                "{msg: please prefix all routes with /api to correctly route requests}".encode()
+                """{msg: please prefix all routes with /api 
+                   to correctly route requests}""".encode()
             ]

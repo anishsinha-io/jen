@@ -9,6 +9,12 @@ from .entity import UserWithCredentialData, Access
 
 @with_connection
 def get_user(conn: Connection[DictRow], dto: GetUser) -> UserWithCredentialData | None:
+    """Function to fetch a user by id from the database
+
+    :param conn: a database connection
+    :param dto: information needed to fetch a user by id
+    """
+
     query = """
             select blog.users.id, first_name, last_name, email, username, blog.users.created_at,
             blog.users.updated_at, user_credentials.algorithm, user_credentials.secret_data from 
@@ -26,6 +32,12 @@ def get_user(conn: Connection[DictRow], dto: GetUser) -> UserWithCredentialData 
 def get_user_by_email(
     conn: Connection[DictRow], dto: GetUserByEmail
 ) -> UserWithCredentialData | None:
+    """Function to fetch a user by email from the database
+
+    :param conn: a database connection
+    :param dto: information needed to get a user by email
+    """
+
     query = """
             select blog.users.id, first_name, last_name, email, username, blog.users.created_at,
             blog.users.updated_at, user_credentials.algorithm, user_credentials.secret_data from 
@@ -41,6 +53,11 @@ def get_user_by_email(
 
 @with_connection
 def get_user_access(conn: Connection[DictRow], dto: GetUserAccess) -> Access:
+    """Function to get a user's access level from the database
+
+    :param conn: a database connection
+    :param dto: information needed to get a user's access levels
+    """
     with conn.cursor() as cursor:
         access = Access()
 

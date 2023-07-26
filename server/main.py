@@ -3,20 +3,20 @@ from app import create_app
 from app.launch import LaunchMode
 from app.log.logger import get_logger
 
-from flask import jsonify
-from psycopg.rows import DictRow
+from flask import Response, jsonify
 from werkzeug.exceptions import HTTPException
 
 server = create_app()
 
-logger = get_logger("MAIN")
+logger = get_logger("Main")
 
 
 @server.errorhandler(Exception)
-def handle_error(e):
+def handle_error(e) -> tuple[Response, int]:
     code = 500
     if isinstance(e, HTTPException):
-        code = e.code
+        if e.code is not None:
+            code = e.code
 
     logger.error(str(e))
     return jsonify(error="internal server error"), code
@@ -26,7 +26,8 @@ def handle_error(e):
 def liveness_probe():
     return (
         jsonify(
-            msg="if you're seeing this, the app is live! also, hi from anish and jenny (:"
+            msg="""if you're seeing this, the app is live! 
+                   also, hi from anish and jenny (:"""
         ),
         200,
     )
@@ -36,7 +37,8 @@ def liveness_probe():
 def readiness_probe():
     return (
         jsonify(
-            msg="if you're seeing this, the app is ready!, also, hi from anish and jenny (:"
+            msg="""if you're seeing this, the app is ready!, 
+                   also, hi from anish and jenny (:"""
         ),
         200,
     )

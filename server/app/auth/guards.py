@@ -1,7 +1,7 @@
 import functools
 
 from app.log.logger import get_logger
-from flask import request, session, jsonify
+from flask import request, session, jsonify, g
 
 from .tokens import verify_token
 
@@ -14,6 +14,41 @@ def rbac_guard(
     permissions=None,
     # scopes: list[str] = [],
 ):
+    """Role Based Access Control
+
+    This function may be used a as a decorator over any endpoint that needs
+    access control. Specifically, this guard can be used to ensure that the
+    groups, roles, and permissions a user has are enough to be allowed
+    access to the guarded route. It can be used as follows:
+
+    ```python
+
+    from flask import Flask
+
+    app = Flask(__name__)
+
+    # unguarded route
+    app.route("/", methods=["GET"])
+    def handle_unguarded():
+        pass
+
+    # guarded route
+
+    @rbac_guard(groups=["admin"], roles=["admin_default", "default"],
+                permissions=["default_post_permmissions"])
+    @app.route("/protected")
+    def handle_guarded():
+        pass
+    ```
+
+    This guard does NOT recursively check the permissions belonging to groups
+    or roles, and will only check against the inline permissions that a user has.
+    This is done to increase performance. However, it should be noted that this
+    means the guard may return false negatives (where a user is actually allowed
+    to access a route but they are denied anyway). Some creative caching solutions
+    could be formulated to handle this...
+    """
+
     if groups is None:
         groups = ["default"]
     if permissions is None:
@@ -47,6 +82,8 @@ def rbac_guard(
             claims = verify_token(token=bearer_token)
             if claims is None:
                 return jsonify(msg="invalid token"), 401
+
+            g.claims = claims
 
             # valid session + valid cookie
 

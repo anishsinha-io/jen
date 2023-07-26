@@ -32,7 +32,8 @@ export const AuthContext = React.createContext<Auth>({
   login: null,
 });
 
-export const AuthContextProvider = (props) => {
+// TODO refactor to not use any
+export const AuthContextProvider = (props: any) => {
   const [token, setToken] = useState<string>("");
   const [authenticated, setAuthenticated] = useState<boolean>(false);
   const [loadingAuthenticationState, setLoadingAuthenticationState] =

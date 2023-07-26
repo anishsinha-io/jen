@@ -15,7 +15,10 @@ class CreatePostDto(Dto):
     """Information needed to create a post"""
 
     user_id: str
+    title: str
     content: str
+    read_time: int
+    tag_ids: list[str]
 
 
 @dataclass
@@ -27,6 +30,7 @@ class GetPostsDto(Dto):
     min_read_time: int
     tag_ids: list[str] = field(default_factory=lambda: [])
     paginate: int = 20
+    offset: int = 0
 
 
 @dataclass

@@ -6,6 +6,8 @@ from app.entity import Entity
 
 @dataclass
 class Post(Entity):
+    """A post object from the database"""
+
     id: str
     user_id: str
     title: str
