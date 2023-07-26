@@ -1,21 +1,16 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 
 import styles from "./homepage.module.css";
 import { Tab, TabContext } from "@/context/Tab";
 
-import RTE from "@components/editor/RTE";
-
 const HomePage: React.FC = () => {
-    const { setTab } = useContext<Tab>(TabContext);
+  const { setTab } = useContext<Tab>(TabContext);
 
-    useEffect(() => {
-        setTab(() => "home");
-    }, []);
+  useEffect(() => {
+    setTab(() => "home");
+  }, []);
 
-
-    return <section className={styles.home}>
-        <RTE />
-    </section>;
+  return <section className={styles.home}>Welcome!</section>;
 };
 
 export default HomePage;

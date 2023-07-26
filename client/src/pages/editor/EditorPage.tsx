@@ -1,10 +1,14 @@
 import React from "react";
 
 import styles from "./EditorPage.module.css";
+import RTE from "@/components/editor/RTE";
 
-const EditorPage = () => {
-    return <section className={styles.editor}>
-    </section>;
+const EditorPage: React.FC = () => {
+  return (
+    <section className={styles.editor}>
+      <RTE />
+    </section>
+  );
 };
 
 export default EditorPage;
