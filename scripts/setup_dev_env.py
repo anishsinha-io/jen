@@ -3,9 +3,11 @@ import secrets
 
 WORKDIR = os.path.dirname(os.path.abspath(__file__))
 
-path_to_server = f"{WORKDIR}/../server/"
+path_to_server = f"{WORKDIR}/../server"
 
 env_file_path = path_to_server + "/.env.generated"
+
+print(env_file_path)
 
 secret = secrets.token_urlsafe(512)
 
@@ -30,5 +32,6 @@ RSA_PUBLIC_KEY="{public_key}"\nRSA_PRIVATE_KEY="{private_key}"\nHASH_ALGORITHM="
 TOKEN_AUD="https://anishsinha.io"
 """
 
-with open(env_file_path, "w") as f:
+with open(env_file_path, "w+") as f:
+    print("HERE")
     f.write(env)
