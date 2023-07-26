@@ -5,7 +5,7 @@ WORKDIR = os.path.dirname(os.path.abspath(__file__))
 
 path_to_server = f"{WORKDIR}/../server/"
 
-env_file_path = path_to_server + "/.env.example"
+env_file_path = path_to_server + "/.env.generated"
 
 secret = secrets.token_urlsafe(512)
 
